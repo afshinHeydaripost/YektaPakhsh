@@ -17,10 +17,12 @@ namespace Site
 			builder.Services.AddDbContext<UserContext>(options =>
 							options.UseSqlServer(connection));
 
-			builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-				//.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedPhoneNumber = true)
-				.AddEntityFrameworkStores<UserContext>()
-				.AddDefaultTokenProviders();
+			//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
+
+			//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+			//	//.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedPhoneNumber = true)
+			//	.AddEntityFrameworkStores<UserContext>()
+			//	.AddDefaultTokenProviders();
 			builder.Services.ConfigureApplicationCookie(options =>
 			{
 				// Cookie settings

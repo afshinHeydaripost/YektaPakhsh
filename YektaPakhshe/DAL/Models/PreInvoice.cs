@@ -6,7 +6,8 @@ namespace DAL.Models;
 
 public partial class PreInvoice : BaseEntity
 {
-    public string PreInvoiceNo { get; set; } = null!;
 
-    public DateTime PreInvoiceDate { get; set; }
+	public string PreInvoiceNo { get; set; } = null!;
+
+	public DateTime PreInvoiceDate { get; set; }
 }

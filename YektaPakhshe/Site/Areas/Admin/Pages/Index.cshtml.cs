@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Site.Areas.Admin.Pages
 {
-	//[Authorize]
+	[Authorize]
 	public class IndexModel : PageModel
     {
         public void OnGet()
