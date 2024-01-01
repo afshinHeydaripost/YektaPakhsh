@@ -17,6 +17,8 @@ namespace Site
 			builder.Services.AddDbContext<UserContext>(options =>
 							options.UseSqlServer(connection));
 
+  // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
+
 			//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
 
 			//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

@@ -1,0 +1,22 @@
+﻿body {
+}
+
+
+
+
+
+
+/***************************Loading***********************************/
+
+.page-loader {
+    background-color: transparent !important;
+}
+
+.blockui {
+    background: #000 !important;
+}
+
+    .blockui > span {
+        color: #fff !important;
+    }
+/***************************end Loading***********************************/
