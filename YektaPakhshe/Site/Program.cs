@@ -45,7 +45,7 @@ namespace Site
 				options.Password.RequiredLength = 5;
 				options.Password.RequiredUniqueChars = 0;
 				options.SignIn.RequireConfirmedAccount = false;
-				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedEmail = true;
 				options.SignIn.RequireConfirmedPhoneNumber = true;
 			});
 			builder.Services.Configure<SecurityStampValidatorOptions>(options =>

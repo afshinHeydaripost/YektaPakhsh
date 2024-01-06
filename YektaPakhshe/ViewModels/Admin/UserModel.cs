@@ -13,17 +13,18 @@ namespace ViewModels.Admin
 	}
 	public class ChangePasswordViewModel
 	{
-		[Required]
+		[Required(ErrorMessage = "{0} را وارد کنید")]
 		[DataType(DataType.Password)]
 		[Display(Name = "کلمه عبور فعلی")]
 		public string OldPassword { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "{0} را وارد کنید")]
 		[StringLength(100, ErrorMessage = "لطفا {0} را وارد کنید", MinimumLength = 6)]
 		[DataType(DataType.Password)]
 		[Display(Name = "کلمه عبور جدید")]
 		public string NewPassword { get; set; }
 
+		[Required(ErrorMessage = "{0} را وارد کنید")]
 		[DataType(DataType.Password)]
 		[Display(Name = "تکرار کلمه عبور")]
 		[Compare("NewPassword", ErrorMessage = "کلمه عبور جدید و تکرار آن باهم مطابقت ندارد")]

@@ -6,8 +6,8 @@ using ViewModels.Admin;
 
 namespace Site.Areas.Admin.Pages
 {
-	public class ChangePasswordModel : PageModel
-	{
+    public class ChangePasswordModel : PageModel
+    {
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 
@@ -24,9 +24,9 @@ namespace Site.Areas.Admin.Pages
 		public ChangePasswordViewModel Input { get; set; }
 
 		public void OnGet()
-		{
-		}
-		public async Task<IActionResult> OnPostChangePassword(ChangePasswordViewModel Input)
+        {
+        }
+		public async Task<IActionResult> OnPostChange()
 		{
 			if (!ModelState.IsValid)
 			{
