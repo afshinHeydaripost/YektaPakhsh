@@ -1,5 +1,4 @@
-﻿namespace Repository.Class
-{
+﻿
     public class Message
     {
         //---- User ---
@@ -85,4 +84,4 @@
         public const string CancelIsReserved = "لطفا انصراف را در صفحه درگاه پرداخت بزنید.";
 
     }
-}
+
