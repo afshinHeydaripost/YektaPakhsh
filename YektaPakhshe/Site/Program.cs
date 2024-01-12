@@ -1,6 +1,9 @@
+using DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Identity;
+using Repository.Interface;
+using Repository.Repositories;
 using Site.Areas.Identity.Data;
 
 namespace Site
@@ -11,13 +14,17 @@ namespace Site
 		{
 			var builder = WebApplication.CreateBuilder(args);
 			string connection = builder.Configuration.GetConnectionString("MainConnection");
+			builder.Services.AddDbContext<YektaPakhshContext>(options => options.UseSqlServer(connection).EnableSensitiveDataLogging());
 			// Add services to the container.
 			builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+			//Post in Ajax
+			builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
 			#region Identity
 			builder.Services.AddDbContext<UserContext>(options =>
 							options.UseSqlServer(connection));
 
-  // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
+			// builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
 
 			//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<UserContext>();
 
@@ -54,6 +61,9 @@ namespace Site
 				options.ValidationInterval = TimeSpan.Zero;
 			});
 			#endregion
+			// Dependency Injection
+			RegisterRepositories(builder.Services);
+			builder.Services.AddCors();
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -71,6 +81,12 @@ namespace Site
 			app.MapRazorPages();
 
 			app.Run();
+		}
+
+
+		static void RegisterRepositories(IServiceCollection services)
+		{
+			services.AddScoped<IUserRepository, UserRepository>();
 		}
 	}
 }
