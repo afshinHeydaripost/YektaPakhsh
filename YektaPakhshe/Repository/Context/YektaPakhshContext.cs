@@ -28,6 +28,7 @@ public partial class YektaPakhshContext : DbContext
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
     public virtual DbSet<PreInvoice> PreInvoices { get; set; }
+    public virtual DbSet<Person> Person { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -129,6 +130,13 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.PreInvoiceNo)
                 .HasMaxLength(10)
                 .IsFixedLength();
+        }); 
+        modelBuilder.Entity<Person>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_PreInvoiceNo");
+
+            entity.ToTable("Person");
+
         });
 
         OnModelCreatingPartial(modelBuilder);
