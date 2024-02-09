@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -34,7 +35,7 @@ namespace Site.Areas.Admin.Pages
 			//{
 			//	return new JsonResult(Helper.GeneralResponse.Fail("اطلاعات ارسالی معتبر نیست"));
 			//}
-			user.UserId = await _userRep.GetUserId(User);
+			user.UserId = User.GetLogginedUserID();
 			return new JsonResult(await _userRep.UpdateUserInfo(user));
 		}
 	}

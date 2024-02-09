@@ -1,17 +1,16 @@
-﻿using System;
+﻿using DAL.Base;
+using System;
 using System.Collections.Generic;
 
 namespace DAL.Models;
 
-public partial class AspNetUserClaim
+public partial class AspNetUserClaim : BaseEntity
 {
-    public int Id { get; set; }
+    public string UserId { get; set; }
 
-    public string UserId { get; set; } = null!;
+    public string ClaimType { get; set; }
 
-    public string? ClaimType { get; set; }
+    public string ClaimValue { get; set; }
 
-    public string? ClaimValue { get; set; }
-
-    public virtual AspNetUser User { get; set; } = null!;
+    public virtual AspNetUser User { get; set; }
 }
