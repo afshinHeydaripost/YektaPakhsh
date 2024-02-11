@@ -16,7 +16,8 @@ public partial class YektaPakhshContext : DbContext
     {
     }
 
-    public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+	public virtual DbSet<UserAccessProduct> UserAccessProducts { get; set; }
+	public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
@@ -423,7 +424,15 @@ public partial class YektaPakhshContext : DbContext
                 .HasConstraintName("FK_Unit_AspNetUsers");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+		modelBuilder.Entity<UserAccessProduct>(entity =>
+		{
+			entity.ToTable("UserAccessProduct");
+
+			entity.Property(e => e.UserId)
+				.IsRequired()
+				.HasMaxLength(450);
+		});
+		OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

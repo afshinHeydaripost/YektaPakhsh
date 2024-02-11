@@ -15,5 +15,6 @@ namespace Repository.Interface
 		Task<UserViewModel> GetCurrent(ClaimsPrincipal user);
 		Task<string> GetUserId(ClaimsPrincipal user);
 		Task<GeneralResponse> UpdateUserInfo(UserViewModel user);
+		Task<GeneralResponse> UserIsAdmin(string userId);
 	}
 }

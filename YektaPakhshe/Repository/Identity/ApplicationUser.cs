@@ -22,6 +22,7 @@ namespace Repository.Identity
 
 		[MaxLength(2000)]
 		public string? ProfilePicture { get; set; }
+		public bool IsAdmin { get; set; }
 
 	}
 }

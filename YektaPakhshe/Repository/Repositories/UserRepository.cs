@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ViewModels.Admin;
 using Helper;
 using System.Security.Claims;
+using Repository.Context;
 
 namespace Repository.Repositories
 {
@@ -76,8 +77,9 @@ namespace Repository.Repositories
 				User.Address = user.Address;
 				User.ProfilePicture = user.ProfilePicture;
 				User.Birthday = user.strBirthday.ToDateTime();
-				var res=await  _userManager.UpdateAsync(User);
-				if (!res.Succeeded) {
+				var res = await _userManager.UpdateAsync(User);
+				if (!res.Succeeded)
+				{
 					var errList = new List<string>();
 					foreach (var error in res.Errors)
 					{
@@ -87,9 +89,20 @@ namespace Repository.Repositories
 				}
 				return GeneralResponse.Success();
 			}
-			catch (Exception e) {
+			catch (Exception e)
+			{
 				return GeneralResponse.Fail(e);
 			}
+		}
+
+		public async Task<GeneralResponse> UserIsAdmin(string userId)
+		{
+			var user = await _userManager.FindByIdAsync(userId);
+			if (user == null)
+				return GeneralResponse.Fail();
+			if (!user.IsAdmin)
+				return GeneralResponse.Fail();
+			return GeneralResponse.Success();
 		}
 	}
 }
