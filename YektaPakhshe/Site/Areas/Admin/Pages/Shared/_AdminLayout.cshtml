@@ -29,6 +29,8 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!--begin::Page Vendors Styles(used by this page)-->
 	<link href="~/Admin/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css?v=7.0.5" rel="stylesheet" type="text/css" />
 	<!--end::Page Vendors Styles-->
+    <link href="~/Admin/lib/datatables/datatables.bundle.rtl.css" rel="stylesheet" />
+    <link href="~/Admin/lib/datatables/responsive.dataTables.min.css" rel="stylesheet" id="resStyle" />
 	<!--begin::Global Theme Styles(used by all pages)-->
 	<link href="~/Admin/plugins/global/plugins.bundle.rtl.css?v=7.0.5" rel="stylesheet" type="text/css" />
 	<link href="~/Admin/plugins/custom/prismjs/prismjs.bundle.rtl.css?v=7.0.5" rel="stylesheet" type="text/css" />
@@ -43,7 +45,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<link rel="shortcut icon" href="~/Admin/media/logos/favicon.ico" />
 	<link href="~/lib/toast/css/jquery.toast.css" rel="stylesheet" />
 	<link href="~/admin/css/site.css" rel="stylesheet" />
-
+	@RenderSection("Style", required: false)
 
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -259,6 +261,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!--begin::Page Scripts(used by this page)-->
 	<script src="~/Admin/js/pages/widgets.js?v=7.0.5"></script>
 	<!--end::Page Scripts-->
+	<script src="~/Admin/lib/datatables/datatables.bundle.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 

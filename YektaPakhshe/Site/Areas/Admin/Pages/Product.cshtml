@@ -16,10 +16,41 @@
 			</div>
 			<div class="card-body">
 				<div class="tab-content">
-					
+					<table id="tblFooter" class="table table-light">
+                        <thead>
+                            <tr>
+                                <th>کد</th>
+                                <th>ترتیب نمایش</th>
+                                <th>عنوان</th>
+                                <th>محل باز شدن</th>
+                                <th>تاریخ به روزرسانی</th>
+                                <th>تاریخ به روزرسانی</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!--end::Row-->
+@section Script{
+	<script>
+	        $(document).ready(function () {
+            	initDataTables();
+			})
+	        function initDataTables() {
+                  $("#tblFooter").DataTable({
+                        language: {
+                            url: "/lib/datatables/Persian.json"
+                        },
+						responsive: true,
+                        select: true,
+                    });
+        }
+	</script>
+
+}
