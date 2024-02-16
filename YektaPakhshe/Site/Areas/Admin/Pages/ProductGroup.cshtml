@@ -1,0 +1,108 @@
+﻿@page
+@model Site.Areas.Admin.Pages.ProductGroupModel
+@{
+
+}
+
+
+<!--begin::Row-->
+<div class="row">
+    <div class="col-12">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">لیست کالا ها</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <table id="tblProductGroup" class="table table-light">
+                        <thead>
+                            <tr>
+                                <th>کد</th>
+                                <th>عنوان</th>
+                                <th>کد والد</th>
+                                <th>عنوان والد</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Row-->
+@section Script {
+    <script>
+        $(document).ready(function () {
+            initDataTables();
+        })
+        function initDataTables() {
+            GetFromServer('@Url.Page("ProductGroup", "List")', {}, function (result) {
+                DataTableDestroy("#tblProduct");
+                $("#tblProductGroup").DataTable({
+                    data: result,
+                    language: {
+                        url: "/lib/datatables/Persian.json"
+                    },
+                    responsive: true,
+                    select: true,
+                    order: [[0, "desc"]],
+                    columns: [
+                        {
+                            data: "code",
+                            width: "20%",
+                            render: function (data, type, row, meta) {
+                                return "<p class='ltr text-left'>" + data + "</p>";
+                            }
+                        },
+                        {
+                            sortable: true,
+                            data: "title",
+                            width: "30%",
+
+                            render: function (data, type, row, meta) {
+                                return SubString(data, 0, 80);
+                            }
+                        },
+                        {
+                            data: "parentTitle",
+                            width: "20%",
+                            render: function (data, type, row, meta) {
+                                return "<p class='ltr text-left'>" + data + "</p>";
+                            }
+                        },
+                        {
+                            sortable: true,
+                            data: "parentTitle",
+                            width: "30%",
+
+                            render: function (data, type, row, meta) {
+                                return SubString(data, 0, 80);
+                            }
+                        },
+                        {
+                            sortable: false,
+                            data: "id",
+                            width: "20%",
+
+                            render: function (data, type, row, meta) {
+                                var html = '';
+                                html += '<a data="' + data + '" class=" btn btn-sm btn-clean btn-icon cursor-pointer edit" title="ویرایش"><i class="la la-edit"></i></a>';
+                                html += '<a data="' + data + '" class="btn btn-sm btn-clean btn-icon cursor-pointer remove" title="حذف"><i class="la la-trash"></i></a>';
+                                return html
+                            }
+                        }
+
+                    ]
+                });
+
+            }, true)
+
+        }
+    </script>
+
+}

@@ -10,14 +10,17 @@ using System.Xml.Linq;
 
 namespace ViewModels.Admin
 {
-	internal class ProductModel
-	{
-	}
-	public class ProductViewModel:GeneralModel
-	{
-		public string Title { get; set; }
-		public string Code { get; set; }
-		public string ProductGroupTitle { get; set; }
-		public string ProductGroupCode { get; set; }
-	}
+    internal class ProductModel
+    {
+    }
+    public class ProductViewModel : GeneralModel
+    {
+        public string ProductGroupTitle { get; set; }
+        public string ProductGroupCode { get; set; }
+    }
+    public class ProductGroupViewModel : GeneralModel
+    {
+        public string ParentTitle { get; set; }
+        public string ParentCode { get; set; }
+    }
 }
