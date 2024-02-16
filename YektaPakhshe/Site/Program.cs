@@ -88,6 +88,7 @@ namespace Site
 		static void RegisterRepositories(IServiceCollection services)
 		{
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IProductRepository, ProductRepository>();
 		}
 	}
 }

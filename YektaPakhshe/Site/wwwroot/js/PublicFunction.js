@@ -1,4 +1,8 @@
-﻿function AjaxStart() {
+﻿function DataTableDestroy(tbl) {
+    $(tbl).DataTable().destroy();
+}
+
+function AjaxStart() {
     $('#loadingDiv').show();
     $('#loadingDiv').addClass("d-flex");
 }

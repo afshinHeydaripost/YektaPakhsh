@@ -35,7 +35,7 @@ public partial class YektaPakhshContext : DbContext
 
     public virtual DbSet<InvoiceFolder> InvoiceFolders { get; set; }
 
-    public virtual DbSet<Person> People { get; set; }
+    public virtual DbSet<Person> Person { get; set; }
 
     public virtual DbSet<PreInvoice> PreInvoices { get; set; }
 
