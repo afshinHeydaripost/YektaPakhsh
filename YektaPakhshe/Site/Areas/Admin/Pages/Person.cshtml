@@ -1,5 +1,5 @@
 ﻿@page
-@model Site.Areas.Admin.Pages.ProductModel
+@model Site.Areas.Admin.Pages.PersonModel
 @{
 
 }
@@ -11,20 +11,18 @@
         <div class="card card-custom">
             <div class="card-header">
                 <div class="card-title">
-                    <h3 class="card-label">لیست کالا ها</h3>
+                    <h3 class="card-label">لیست طرف حساب ها</h3>
                 </div>
             </div>
             <div class="card-body">
                 <div class="tab-content">
-                    <table id="tblProduct" class="table table-light">
+                    <table id="tblPerson" class="table table-light">
                         <thead>
                             <tr>
                                 <th>کد</th>
                                 <th>عنوان</th>
-                                <th>کد دسته بندی کالا </th>
-                                <th>دسته بندی کالا</th>
-                                <th>کد واحد کالا </th>
-                                <th>عنوان واحد کالا</th>
+                                <th>کاربر ثبت کننده</th>
+                                <th>نوع مالکیت</th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -43,9 +41,9 @@
             initDataTables();
         })
         function initDataTables() {
-            GetFromServer('@Url.Page("Product", "List")', {}, function (result) {
-                DataTableDestroy("#tblProduct");
-                $("#tblProduct").DataTable({
+            GetFromServer('@Url.Page("Person", "List")', {}, function (result) {
+                DataTableDestroy("#tblPerson");
+                $("#tblPerson").DataTable({
                     data: result,
                     language: {
                         url: "/lib/datatables/Persian.json"
@@ -72,16 +70,7 @@
                         },
                         {
                             sortable: true,
-                            data: "productGroupCode",
-                            width: "20%",
-
-                            render: function (data, type, row, meta) {
-                                return "<p class='ltr text-left'>" + data + "</p>";
-                            }
-                        },
-                        {
-                            sortable: true,
-                            data: "productGroupTitle",
+                            data: "userTitle",
                             width: "30%",
 
                             render: function (data, type, row, meta) {
@@ -90,17 +79,8 @@
                         },
                         {
                             sortable: true,
-                            data: "unitCode",
-                            width: "20%",
-
-                            render: function (data, type, row, meta) {
-                                return "<p class='ltr text-left'>" + data + "</p>";
-                            }
-                        },
-                        {
-                            sortable: true,
-                            data: "unitTitle",
-                            width: "20%",
+                            data: "ownerShipTypeTitle",
+                            width: "30%",
 
                             render: function (data, type, row, meta) {
                                 return SubString(data, 0, 80);

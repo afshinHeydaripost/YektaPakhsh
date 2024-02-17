@@ -90,6 +90,7 @@ namespace Site
 			services.AddScoped<IUserRepository, UserRepository>();
 			services.AddScoped<IProductRepository, ProductRepository>();
 			services.AddScoped<IProductGroupRepository, ProductGroupRepository>();
+			services.AddScoped<IPersonRepository, PersonRepository>();
 		}
 	}
 }

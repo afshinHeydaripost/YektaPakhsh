@@ -34,6 +34,7 @@ public partial class Product : BaseEntity
     public virtual ICollection<PreInvoiceFolder> PreInvoiceFolders { get; set; } = new List<PreInvoiceFolder>();
 
     public virtual ProductGroup ProductGroup { get; set; }
+    public virtual Unit Unit{ get; set; }
 
     public virtual AspNetUser User { get; set; }
 }

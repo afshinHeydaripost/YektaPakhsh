@@ -48,6 +48,7 @@ public partial class YektaPakhshContext : DbContext
     public virtual DbSet<ProductGroup> ProductGroups { get; set; }
 
     public virtual DbSet<Unit> Units { get; set; }
+    public virtual DbSet<PersonAddress> PersonAddress { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -215,7 +216,6 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(38, 2)");
-            entity.Property(e => e.UnitQuantity).HasColumnType("decimal(38, 3)");
 
             entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceFolders)
                 .HasForeignKey(d => d.InvoiceId)
@@ -235,7 +235,7 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.BirthDate).HasMaxLength(10);
             entity.Property(e => e.Code)
                 .IsRequired()
-                .HasMaxLength(8)
+                .HasMaxLength(10)
                 .IsUnicode(false);
             entity.Property(e => e.CreateDateTime).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(1000);
@@ -263,8 +263,41 @@ public partial class YektaPakhshContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Person_AspNetUsers");
+            entity.HasOne(d => d.OwnerShipType).WithMany(p => p.Person)
+                .HasForeignKey(d => d.OwnerShipTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Person_OwnerShipType");
         });
 
+        modelBuilder.Entity<OwnerShipType>(entity =>
+        {
+
+
+            entity.ToTable("OwnerShipType");
+
+            entity.Property(e => e.Code)
+                .IsRequired()
+                .HasMaxLength(4)
+                .IsUnicode(false);
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+        modelBuilder.Entity<PersonAddress>(entity =>
+        {
+            entity.ToTable("PersonAddress");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.PersonAddress)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PersonAddress_Person");
+
+            entity.HasOne(d => d.User).WithMany(p => p.PersonAddress)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PersonAddress_AspNetUsers");
+        });
         modelBuilder.Entity<PreInvoice>(entity =>
         {
             entity.ToTable("preInvoice");
@@ -286,9 +319,6 @@ public partial class YektaPakhshContext : DbContext
                 .HasMaxLength(450);
             entity.Property(e => e.ValidityDate).HasColumnType("date");
 
-            entity.HasOne(d => d.Invoice).WithMany(p => p.PreInvoices)
-                .HasForeignKey(d => d.InvoiceId)
-                .HasConstraintName("FK_preInvoice_Invoice");
 
             entity.HasOne(d => d.Person).WithMany(p => p.PreInvoices)
                 .HasForeignKey(d => d.PersonId)
@@ -334,7 +364,6 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(38, 2)");
-            entity.Property(e => e.UnitQuantity).HasColumnType("decimal(38, 3)");
 
             entity.HasOne(d => d.PreInvoice).WithMany(p => p.PreInvoiceFolders)
                 .HasForeignKey(d => d.PreInvoiceId)
@@ -367,6 +396,9 @@ public partial class YektaPakhshContext : DbContext
             entity.HasOne(d => d.ProductGroup).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ProductGroupId)
                 .HasConstraintName("FK_Product_ProductGroup");
+            entity.HasOne(d => d.Unit).WithMany(p => p.Products)
+                .HasForeignKey(d => d.UnitId)
+                .HasConstraintName("FK_Product_Unit");
 
             entity.HasOne(d => d.User).WithMany(p => p.Products)
                 .HasForeignKey(d => d.UserId)
@@ -399,6 +431,8 @@ public partial class YektaPakhshContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_GoodsGroup_AspNetUsers");
         });
+        
+
 
         modelBuilder.Entity<Unit>(entity =>
         {

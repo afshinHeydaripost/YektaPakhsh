@@ -66,6 +66,7 @@ public partial class AspNetUser
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     public virtual ICollection<Unit> Units { get; set; } = new List<Unit>();
+    public virtual ICollection<PersonAddress> PersonAddress { get; set; } = new List<PersonAddress>();
 
     public virtual ICollection<AspNetRole> Roles { get; set; } = new List<AspNetRole>();
 }

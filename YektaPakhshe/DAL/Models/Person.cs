@@ -25,7 +25,7 @@ public partial class Person : BaseEntity
 
     public int OwnerShipTypeId { get; set; }
 
-    public int? LegalTypeId { get; set; }
+    public bool Taxable { get; set; }
 
     public string Description { get; set; }
 
@@ -40,8 +40,10 @@ public partial class Person : BaseEntity
     public DateTime? UpdateDateTime { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+    public virtual ICollection<PersonAddress> PersonAddress { get; set; } = new List<PersonAddress>();
 
     public virtual ICollection<PreInvoice> PreInvoices { get; set; } = new List<PreInvoice>();
 
     public virtual AspNetUser User { get; set; }
+    public virtual OwnerShipType OwnerShipType { get; set; }
 }

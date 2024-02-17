@@ -62,7 +62,5 @@ public partial class Invoice : BaseEntity
 
     public virtual PreInvoice PreInvoice { get; set; }
 
-    public virtual ICollection<PreInvoice> PreInvoices { get; set; } = new List<PreInvoice>();
-
     public virtual AspNetUser User { get; set; }
 }

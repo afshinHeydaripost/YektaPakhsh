@@ -1,5 +1,4 @@
 ﻿using Helper;
-using Helper;
 using Repository.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,9 @@ using ViewModels.Admin;
 
 namespace Repository.Interface
 {
-	public interface IProductRepository
-	{
-		Task<List<ProductViewModel>> GetList(string userId,string text="");
+	public interface IPersonRepository
+    {
+		Task<List<PersonViewModel>> GetList(string userId,string text="");
+		Task<string> GetMaxCode(string userId);
 	}
 }

@@ -42,7 +42,7 @@
         })
         function initDataTables() {
             GetFromServer('@Url.Page("ProductGroup", "List")', {}, function (result) {
-                DataTableDestroy("#tblProduct");
+                DataTableDestroy("#tblProductGroup");
                 $("#tblProductGroup").DataTable({
                     data: result,
                     language: {

@@ -35,7 +35,9 @@ namespace Repository.Repositories
                 Title = x.Title,
                 Code = x.Code,
                 ProductGroupTitle = x.ProductGroup.Title,
-                ProductGroupCode = x.ProductGroup.Code
+                ProductGroupCode = x.ProductGroup.Code,
+                UnitCode=x.Unit.Code,
+                UnitTitle=x.Unit.Title
             }).AsQueryable();
             if (!string.IsNullOrEmpty(text))
                 query = query.Where(x => x.Code.Contains(text) || x.Title.Contains(text) || x.ProductGroupTitle.Contains(text) || x.ProductGroupCode.Contains(text)).AsQueryable();

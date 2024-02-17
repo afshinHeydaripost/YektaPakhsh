@@ -29,9 +29,6 @@ public partial class PreInvoice : BaseEntity
 
     public DateTime? ValidityDate { get; set; }
 
-    public int? InvoiceId { get; set; }
-
-    public virtual Invoice Invoice { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 

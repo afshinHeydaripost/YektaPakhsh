@@ -17,6 +17,8 @@ namespace ViewModels.Admin
     {
         public string ProductGroupTitle { get; set; }
         public string ProductGroupCode { get; set; }
+        public string UnitTitle { get; set; }
+        public string UnitCode { get; set; }
     }
     public class ProductGroupViewModel : GeneralModel
     {

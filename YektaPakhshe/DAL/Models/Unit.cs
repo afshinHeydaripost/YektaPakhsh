@@ -18,6 +18,6 @@ public partial class Unit : BaseEntity
     public DateTime? UpdateDateTime { get; set; }
 
     public string TaxReferenceId { get; set; }
-
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     public virtual AspNetUser User { get; set; }
 }
