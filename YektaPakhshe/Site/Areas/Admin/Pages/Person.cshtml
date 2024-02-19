@@ -13,6 +13,9 @@
                 <div class="card-title">
                     <h3 class="card-label">لیست طرف حساب ها</h3>
                 </div>
+                <div class="card-toolbar">
+                    <partial name="_btnAdd" model='"btnAdd"' />
+                </div>
             </div>
             <div class="card-body">
                 <div class="tab-content">
@@ -34,12 +37,201 @@
         </div>
     </div>
 </div>
+<!-- Modal-->
+<div class="modal fade" id="personModel" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="personModelTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form class="form" id="frmPerson" method="post">
+                        <input asp-for="Person.Id" type="hidden" />
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">نوع مالکیت</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <select asp-for="Person.OwnerShipTypeId" class="form-control">
+                                            @foreach (var item in Model.ownerShipType)
+                                            {
+                                                <option value="@item.Id">@item.Title</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">کد</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.Code" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12" id="Title">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">عنوان</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.Title" class="form-control form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12" id="FirstName">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">نام</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.FirstName" class="form-control form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12" id="LastName">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">نام خانوادگی</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.LastName" class="form-control form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">کد تجاری</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.EconomicCode" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">تاریخ تولد</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.BirthDate" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">کد ملی</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.NationalityCode" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">کد ثبت</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.RegisterationCode" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">توضیحات</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <textarea asp-for="Person.Description" class="form-control form-control-lg form-control-solid"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">شناسه</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="Person.Reference" class="form-control form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">بستن</button>
+                <partial name="_btn" model='"btnAddOrEditPerson"' />
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--end::Row-->
 @section Script {
+    <link href="~/lib/persian-datepicker/css/persian-datepicker.css" rel="stylesheet" />
+    <script src="~/lib/persian-datepicker/js/persian-date.js"></script>
+    <script src="~/lib/persian-datepicker/js/persian-datepicker.js"></script>
     <script>
         $(document).ready(function () {
+            ToPersianDatepicker('#Person_BirthDate', 'YYYY/MM/DD')
+            ToSelect2("#Person_OwnerShipTypeId")
             initDataTables();
+            $('#btnAddOrEditPerson').click(function () {
+                SendFormToServer("#frmPerson", "@Url.Page("Person", "AddOrEdit")", "#personModel", true)
+            })
+            $('#btnAdd').click(function () {
+                DestroySelect2("#Person_OwnerShipTypeId");
+                ResetForm("#frmPerson");
+                ChangeOwnerShipType();
+                $("#Person_Id").val(0).trigger("change");
+                $("#personModelTitle").text("افزودن شخص جدید");
+                ToSelect2("#Person_OwnerShipTypeId");
+                GetMaxCode();
+                ShowModal("#personModel");
+            })
+            $("#Person_OwnerShipTypeId").change(function () {
+                ChangeOwnerShipType();
+            })
         })
+        function ChangeOwnerShipType() {
+            let ownerShipType = $("#Person_OwnerShipTypeId").val();
+            $("#Title").hide();
+            $("#FirstName").hide();
+            $("#LastName").hide();
+            $("#Person_Title").val(null).trigger("change");
+            $("#Person_FirstName").val(null).trigger("change");
+            $("#Person_LastName").val(null).trigger("change");
+            switch (parseInt(ownerShipType)) {
+                case 1:
+                    $("#FirstName").show();
+                    $("#LastName").show();
+                    break;
+                case 2:
+                    $("#Title").show();
+                    break;
+                default:
+                    $("#FirstName").show();
+                    $("#LastName").show();
+                    break;
+            }
+        }
+        function GetMaxCode() {
+            GetFromServer('@Url.Page("Person", "MaxCode")', {}, function (result) {
+                $("#Person_Code").val(result).trigger("change");
+            }, true)
+        }
+
         function initDataTables() {
             GetFromServer('@Url.Page("Person", "List")', {}, function (result) {
                 DataTableDestroy("#tblPerson");

@@ -2,6 +2,30 @@
     $(tbl).DataTable().destroy();
 }
 
+function ShowModal(model) {
+    $(model).modal('show');
+}
+function HidModal(model) {
+    $(model).modal('hide');
+}
+function ToPersianDatepicker(Selector, format) {
+    $(Selector).persianDatepicker({
+        observer: true,
+        format: format,
+        altField: '.observer-example-alt'
+    });
+}
+function ToSelect2(Selector) {
+    $(Selector).select2({
+        placeholder: "انتخاب کنید"
+    });
+}
+function DestroySelect2(Selector) {
+    $(Selector).select2('destroy');
+}
+function ResetForm(Selector) {
+    $(Selector).trigger("reset");
+}
 function AjaxStart() {
     $('#loadingDiv').show();
     $('#loadingDiv').addClass("d-flex");
@@ -70,7 +94,7 @@ function SendFormToServer(frm, Url, modal = null, isReload = false) {
                 AjaxStop();
                 if (result.isSuccess) {
                     if (!isNullOrEmpty(modal))
-                        $(modal).modal('toggle');
+                        HidModal(model)
                     ToastMessageSuccess(result.message);
                     if (isReload)
                         loadPage();

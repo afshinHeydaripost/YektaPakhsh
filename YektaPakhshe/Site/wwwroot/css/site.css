@@ -24,13 +24,15 @@ body {
 .ltr {
     direction: ltr !important;
 }
+
 .text-left {
     text-align: left !important;
 }
 
-
+.select2 {
+    width: 100% !important
+}
 /***************************Loading***********************************/
-
 .page-loader {
     background-color: transparent !important;
 }

@@ -16,14 +16,14 @@ using Repository.Context;
 namespace Repository.Repositories
 {
 
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository : GeneralRepository<Person>, IPersonRepository
     {
 
         private readonly YektaPakhshContext _Context;
         private readonly IUserRepository _userRepository;
 
 
-        public PersonRepository(YektaPakhshContext Context, IUserRepository userRepository)
+        public PersonRepository(YektaPakhshContext Context, IUserRepository userRepository) : base(Context)
         {
             _Context = Context;
             _userRepository = userRepository;
@@ -57,6 +57,16 @@ namespace Repository.Repositories
                 code = code + 1;
             }
             return code.ToString().PadLeft(6, '0');
+        }
+
+        public async Task<List<OwnerShipTypeViewModel>> GetOwnerShipTypeList()
+        {
+            return await _Context.OwnerShipType.Select(x => new OwnerShipTypeViewModel()
+            {
+                Id = x.Id,
+                Title = x.Title,
+                Code = x.Code,
+            }).ToListAsync();
         }
     }
 }

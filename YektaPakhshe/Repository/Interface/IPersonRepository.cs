@@ -13,6 +13,7 @@ namespace Repository.Interface
 	public interface IPersonRepository
     {
 		Task<List<PersonViewModel>> GetList(string userId,string text="");
+		Task<List<OwnerShipTypeViewModel>> GetOwnerShipTypeList();
 		Task<string> GetMaxCode(string userId);
 	}
 }

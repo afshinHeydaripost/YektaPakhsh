@@ -47,6 +47,7 @@ public partial class YektaPakhshContext : DbContext
 
     public virtual DbSet<ProductGroup> ProductGroups { get; set; }
 
+    public virtual DbSet<OwnerShipType> OwnerShipType { get; set; }
     public virtual DbSet<Unit> Units { get; set; }
     public virtual DbSet<PersonAddress> PersonAddress { get; set; }
 
