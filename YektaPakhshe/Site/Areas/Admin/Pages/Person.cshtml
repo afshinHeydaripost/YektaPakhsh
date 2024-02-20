@@ -188,7 +188,7 @@
             ToSelect2("#Person_OwnerShipTypeId")
             initDataTables();
             $('#btnAddOrEditPerson').click(function () {
-                SendFormToServer("#frmPerson", "@Url.Page("Person", "AddOrEdit")", "#personModel", true)
+                SendFormToServer("#frmPerson", "@Url.Page("Person", "Add")", "#personModel", true)
             })
             $('#btnAdd').click(function () {
                 DestroySelect2("#Person_OwnerShipTypeId");
@@ -200,6 +200,31 @@
                 GetMaxCode();
                 ShowModal("#personModel");
             })
+            $('#tblPerson').on('click', 'a.edit', function (e) {
+                e.preventDefault();
+                let id = $(this).attr("data");
+                GetFromServer('@Url.Page("Person", "ById")', { id: id }, function (result) {
+                    debugger;
+                    DestroySelect2("#Person_OwnerShipTypeId");
+                    ResetForm("#frmPerson");
+                    $("#personModelTitle").text("ویرایش شخص " + result.title);
+                    $("#Person_OwnerShipTypeId").val(result.ownerShipTypeId);
+                    ChangeOwnerShipType();
+                    $("#Person_FirstName").val(result.firstName);
+                    $("#Person_LastName").val(result.lastName);
+                    $("#Person_Title").val(result.title);
+                    $("#Person_EconomicCode").val(result.economicCode);
+                    $("#Person_BirthDate").val(result.birthDate);
+                    $("#Person_NationalityCode").val(result.nationalityCode);
+                    $("#Person_RegisterationCode").val(result.registerationCode);
+                    $("#Person_Description").val(result.description);
+                    $("#Person_Reference").val(result.reference);
+                    $("#Person_Code").val(result.code);
+                    $("#Person_Id").val(result.id);
+                    ToSelect2("#Person_OwnerShipTypeId");
+                    ShowModal("#personModel");
+                }, true)
+            });
             $("#Person_OwnerShipTypeId").change(function () {
                 ChangeOwnerShipType();
             })
@@ -293,7 +318,6 @@
 
                     ]
                 });
-
             }, true)
 
         }

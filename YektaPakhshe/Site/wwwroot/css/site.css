@@ -45,3 +45,6 @@ body {
         color: #fff !important;
     }
 /***************************end Loading***********************************/
+.form-control {
+    border: 1px #bdacac solid !important;
+}

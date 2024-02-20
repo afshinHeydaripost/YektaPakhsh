@@ -29,6 +29,24 @@ namespace Repository.Repositories
             _userRepository = userRepository;
         }
 
+        public async Task<GeneralResponse> CheckCodeTitle(string userId, int ownerShipTypeId, string code, string title, int? id)
+        {
+            var query = _Context.Person.Where(x => x.Code == code).AsQueryable();
+            var msg = "کد";
+            if (ownerShipTypeId == 2)
+            {
+                query = query.Where(x => x.Title == title).AsQueryable();
+                msg = msg + " و عنوان";
+            }
+            if (id != null && id > 0)
+            {
+                query = query.Where(x => x.Id != id).AsQueryable();
+            }
+            if (await query.AnyAsync())
+                return GeneralResponse.Success($"{msg} تکراری است");
+            return GeneralResponse.Fail();
+        }
+
         public async Task<List<PersonViewModel>> GetList(string userId, string text = "")
         {
             var query = _Context.Person.Select(x => new PersonViewModel()
@@ -67,6 +85,34 @@ namespace Repository.Repositories
                 Title = x.Title,
                 Code = x.Code,
             }).ToListAsync();
+        }
+
+        public async Task<PersonItemViewModel> GetPerson(int id, string userId)
+        {
+            var user = await _userRepository.UserIsAdmin(userId);
+            var person = await GetById(id);
+            var item = new PersonItemViewModel()
+            {
+                Code = person.Code,
+                Id = person.Id,
+                BirthDate = person.BirthDate,
+                Description = person.Description,
+                Disabled = person.Disabled,
+                EconomicCode = person.EconomicCode,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                NationalityCode = person.NationalityCode,
+                OwnerShipTypeId = person.OwnerShipTypeId,
+                Taxable = person.Taxable,
+                Reference = person.Reference,
+                RegisterationCode = person.RegisterationCode,
+                Title = person.Title
+            };
+            if (user.isSuccess)
+                return item;
+            if (person.UserId == userId)
+                return item;
+            return null;
         }
     }
 }

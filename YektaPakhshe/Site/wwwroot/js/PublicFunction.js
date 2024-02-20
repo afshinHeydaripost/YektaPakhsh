@@ -94,7 +94,7 @@ function SendFormToServer(frm, Url, modal = null, isReload = false) {
                 AjaxStop();
                 if (result.isSuccess) {
                     if (!isNullOrEmpty(modal))
-                        HidModal(model)
+                        HidModal(modal);
                     ToastMessageSuccess(result.message);
                     if (isReload)
                         loadPage();

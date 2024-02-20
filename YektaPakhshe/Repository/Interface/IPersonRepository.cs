@@ -1,4 +1,5 @@
-﻿using Helper;
+﻿using DAL.Models;
+using Helper;
 using Repository.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ using ViewModels.Admin;
 
 namespace Repository.Interface
 {
-	public interface IPersonRepository
+	public interface IPersonRepository : IGeneralRepository<Person>
     {
 		Task<List<PersonViewModel>> GetList(string userId,string text="");
 		Task<List<OwnerShipTypeViewModel>> GetOwnerShipTypeList();
+		Task<PersonItemViewModel> GetPerson(int id,string userId);
 		Task<string> GetMaxCode(string userId);
+		Task<GeneralResponse> CheckCodeTitle(string userId,int ownerShipTypeId, string code,string title,int? id);
 	}
 }

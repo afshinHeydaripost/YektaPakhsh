@@ -21,15 +21,11 @@ namespace Repository.Repositories
 
         public async Task<GeneralResponse> Add(T item)
         {
-            var res = new GeneralResponse();
-
             try
             {
-                entities.Add(item);
+                await entities.AddAsync(item);
                 await Save();
-                res.isSuccess = true;
-                res.Message = Message.SubmitSuccess;
-                return res;
+                return GeneralResponse.Success();
             }
             catch (Exception e)
             {
@@ -44,9 +40,7 @@ namespace Repository.Repositories
             {
                 _Context.DetachLocal(item, item.Id);
                 await Save();
-                res.isSuccess = true;
-                res.Message = Message.SubmitSuccess;
-                return res;
+                return GeneralResponse.Success();
             }
             catch (Exception e)
             {
@@ -56,20 +50,16 @@ namespace Repository.Repositories
 
         public async Task<GeneralResponse> Delete(int id)
         {
-            var res = new GeneralResponse();
             try
             {
                 var item = await GetById(id);
                 if (item == null)
                 {
-                    res.Message = Message.NotFound;
-                    return res;
+                    return GeneralResponse.NotFound();
                 }
                 entities.Remove(item);
                 await Save();
-                res.isSuccess = true;
-                res.Message = Message.SubmitSuccessDelete;
-                return res;
+                return GeneralResponse.Success();
             }
             catch (Exception e)
             {
@@ -84,9 +74,7 @@ namespace Repository.Repositories
             {
                 entities.Remove(entity);
                 await Save();
-                res.isSuccess = true;
-                res.Message = Message.SubmitSuccessDelete;
-                return res;
+                return GeneralResponse.Success();
             }
             catch (Exception e)
             {
@@ -108,5 +96,6 @@ namespace Repository.Repositories
         {
             await _Context.SaveChangesAsync();
         }
+
     }
 }
