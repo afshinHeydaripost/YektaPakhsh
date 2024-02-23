@@ -306,6 +306,10 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.CreateDateTime).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(3000);
             entity.Property(e => e.DiscountRate).HasColumnType("decimal(7, 2)");
+            entity.Property(e => e.DiscountPrice).HasColumnType("decimal(38, 2)");
+            entity.Property(e => e.Price).HasColumnType("decimal(38, 2)").IsRequired();
+            entity.Property(e => e.TaxPrice).HasColumnType("decimal(38, 2)");
+            entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)").IsRequired();
             entity.Property(e => e.PreInvoiceDate)
                 .HasColumnType("date")
                 .HasColumnName("preInvoiceDate");
@@ -354,14 +358,10 @@ public partial class YektaPakhshContext : DbContext
         modelBuilder.Entity<PreInvoiceFolder>(entity =>
         {
             entity.ToTable("preInvoiceFolder");
-
-            entity.Property(e => e.DiscountPrice).HasColumnType("decimal(38, 2)");
-            entity.Property(e => e.DiscountRate).HasColumnType("decimal(7, 2)");
             entity.Property(e => e.PreInvoiceId).HasColumnName("preInvoiceId");
             entity.Property(e => e.Quantity).HasColumnType("decimal(38, 3)");
             entity.Property(e => e.Reference).HasMaxLength(150);
             entity.Property(e => e.TaxPrice).HasColumnType("decimal(38, 2)");
-            entity.Property(e => e.TaxTollPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(38, 2)");

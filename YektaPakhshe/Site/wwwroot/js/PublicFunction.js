@@ -5,6 +5,10 @@
 function ShowModal(model) {
     $(model).modal('show');
 }
+function GetRowId(obj, attr = "data") {
+    var id = obj.attr(attr);
+    return id;
+}
 function HidModal(model) {
     $(model).modal('hide');
 }
@@ -332,6 +336,25 @@ function PostToServer(url, data, callbackFunction, showloder = false) {
         AjaxStop();
         console.log("error on :" + url);
     })
+}
+function AlertConfirm(title, msg, callbackFunction, callbackCancelFunction = null) {
+    swal({
+        title: title,
+        text: msg,
+        icon: "warning",
+        buttons: ["خیر", "بله!"],
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            if (typeof callbackFunction == 'function') {
+                callbackFunction.call(this);
+            }
+        }
+        else
+            if (typeof callbackCancelFunction == 'function') {
+                callbackCancelFunction.call(this);
+            }
+    });
 }
 function GetFromServer(url, data, callbackFunction, isShowLoading = true) {
     if (isShowLoading)

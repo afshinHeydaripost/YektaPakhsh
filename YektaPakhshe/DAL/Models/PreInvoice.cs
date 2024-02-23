@@ -14,11 +14,15 @@ public partial class PreInvoice : BaseEntity
     public int PersonId { get; set; }
 
     public decimal? DiscountRate { get; set; }
+    public decimal? DiscountPrice { get; set; }
 
     public string Reference { get; set; }
 
     public bool Revoked { get; set; }
 
+    public decimal? Price { get; set; }
+    public decimal? TaxPrice { get; set; }
+    public decimal? TotalNetPrice { get; set; }
     public string UserId { get; set; }
 
     public DateTime CreateDateTime { get; set; }

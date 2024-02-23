@@ -87,31 +87,14 @@ namespace Repository.Repositories
             }).ToListAsync();
         }
 
-        public async Task<PersonItemViewModel> GetPerson(int id, string userId)
+        public async Task<Person> GetPerson(int id, string userId)
         {
             var user = await _userRepository.UserIsAdmin(userId);
             var person = await GetById(id);
-            var item = new PersonItemViewModel()
-            {
-                Code = person.Code,
-                Id = person.Id,
-                BirthDate = person.BirthDate,
-                Description = person.Description,
-                Disabled = person.Disabled,
-                EconomicCode = person.EconomicCode,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                NationalityCode = person.NationalityCode,
-                OwnerShipTypeId = person.OwnerShipTypeId,
-                Taxable = person.Taxable,
-                Reference = person.Reference,
-                RegisterationCode = person.RegisterationCode,
-                Title = person.Title
-            };
             if (user.isSuccess)
-                return item;
+                return person;
             if (person.UserId == userId)
-                return item;
+                return person;
             return null;
         }
     }

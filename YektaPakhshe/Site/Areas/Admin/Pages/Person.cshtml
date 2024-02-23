@@ -171,7 +171,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">بستن</button>
-                <partial name="_btn" model='"btnAddOrEditPerson"' />
+                <partial name="_btn" model='"btnAddPerson"' />
+                <partial name="_btn" model='"btnEditPerson"' />
             </div>
         </div>
     </div>
@@ -187,8 +188,11 @@
             ToPersianDatepicker('#Person_BirthDate', 'YYYY/MM/DD')
             ToSelect2("#Person_OwnerShipTypeId")
             initDataTables();
-            $('#btnAddOrEditPerson').click(function () {
+            $('#btnAddPerson').click(function () {
                 SendFormToServer("#frmPerson", "@Url.Page("Person", "Add")", "#personModel", true)
+            })
+            $('#btnEditPerson').click(function () {
+                SendFormToServer("#frmPerson", "@Url.Page("Person", "Edit")", "#personModel", true)
             })
             $('#btnAdd').click(function () {
                 DestroySelect2("#Person_OwnerShipTypeId");
@@ -198,11 +202,25 @@
                 $("#personModelTitle").text("افزودن شخص جدید");
                 ToSelect2("#Person_OwnerShipTypeId");
                 GetMaxCode();
+                $("#btnEditPerson").hide();
+                $("#btnAddPerson").show();
                 ShowModal("#personModel");
+            })
+            $('#tblPerson').on('click', 'a.remove', function (e) {
+                let Id = GetRowId($(this))
+                AlertConfirm("هشدار","آیا از حذف این مورد مطمئن هستید؟!",function (){
+                    GetFromServer('@Url.Page("Person", "Delete")', { id: Id }, function (result) {
+                        if (result.isSuccess) {
+                            ToastMessageSuccess(result.message);
+                        } else {
+                            ToastMessageError(result.message);
+                        }
+                    })
+                },null)
             })
             $('#tblPerson').on('click', 'a.edit', function (e) {
                 e.preventDefault();
-                let id = $(this).attr("data");
+                let id = GetRowId($(this))
                 GetFromServer('@Url.Page("Person", "ById")', { id: id }, function (result) {
                     debugger;
                     DestroySelect2("#Person_OwnerShipTypeId");
@@ -222,6 +240,8 @@
                     $("#Person_Code").val(result.code);
                     $("#Person_Id").val(result.id);
                     ToSelect2("#Person_OwnerShipTypeId");
+                    $("#btnEditPerson").show();
+                    $("#btnAddPerson").hide();
                     ShowModal("#personModel");
                 }, true)
             });

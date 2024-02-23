@@ -16,13 +16,7 @@ public partial class PreInvoiceFolder : BaseEntity
 
     public decimal TotalPrice { get; set; }
 
-    public decimal? DiscountRate { get; set; }
-
-    public decimal DiscountPrice { get; set; }
-
     public decimal TaxPrice { get; set; }
-
-    public decimal TaxTollPrice { get; set; }
 
     public decimal TotalNetPrice { get; set; }
 

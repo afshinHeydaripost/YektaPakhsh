@@ -15,7 +15,7 @@ namespace Repository.Interface
     {
 		Task<List<PersonViewModel>> GetList(string userId,string text="");
 		Task<List<OwnerShipTypeViewModel>> GetOwnerShipTypeList();
-		Task<PersonItemViewModel> GetPerson(int id,string userId);
+		Task<Person> GetPerson(int id,string userId);
 		Task<string> GetMaxCode(string userId);
 		Task<GeneralResponse> CheckCodeTitle(string userId,int ownerShipTypeId, string code,string title,int? id);
 	}

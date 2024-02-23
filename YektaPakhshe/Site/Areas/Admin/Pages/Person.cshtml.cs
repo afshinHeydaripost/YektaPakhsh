@@ -41,6 +41,13 @@ namespace Site.Areas.Admin.Pages
             var person = await _personRep.GetPerson(id, User.GetLogginedUserID());
             return new JsonResult(person);
         }
+        public async Task<IActionResult> OnGetDelete(int id)
+        {
+            var person = await _personRep.GetPerson(id, User.GetLogginedUserID());
+            if (person == null)
+                return new JsonResult(Helper.GeneralResponse.NotFound());
+            return new JsonResult(await _personRep.Delete(person));
+        }
         public async Task<IActionResult> OnPostAdd()
         {
             if (!ModelState.IsValid)
@@ -79,7 +86,7 @@ namespace Site.Areas.Admin.Pages
             {
                 return new JsonResult(Helper.GeneralResponse.Fail("اطلاعات ارسالی معتبر نیست"));
             }
-            var person = await _personRep.GetPerson(Person.Id??0, User.GetLogginedUserID());
+            var person = await _personRep.GetPerson(Person.Id ?? 0, User.GetLogginedUserID());
             if (person == null)
                 return new JsonResult(Helper.GeneralResponse.NotFound());
             var check = await _personRep.CheckCodeTitle(User.GetLogginedUserID(), Person.OwnerShipTypeId, Person.Code, Person.Title, Person.Id);
@@ -102,7 +109,7 @@ namespace Site.Areas.Admin.Pages
             person.Reference = Person.Reference;
             person.Taxable = Person.Taxable;
             person.RegisterationCode = Person.RegisterationCode;
-            return new JsonResult(await _personRep.Add(person));
+            return new JsonResult(await _personRep.Edit(person));
         }
     }
 }
