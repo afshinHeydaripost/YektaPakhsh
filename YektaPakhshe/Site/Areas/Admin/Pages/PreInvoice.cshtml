@@ -12,7 +12,9 @@
             <div class="card-header">
                 <div class="card-title">
                     <h3 class="card-label">لیست پیش فاکتورها</h3>
-
+                </div>
+                <div class="card-toolbar">
+                    <partial name="_btnAdd" model='"btnAdd"' />
                 </div>
             </div>
             <div class="card-body">
@@ -20,16 +22,18 @@
                     <table id="tblPreInvoice" class="table table-light">
                         <thead>
                             <tr>
-                                <th>کد</th>
-                                <th>عنوان</th>
-                                <th>کد دسته بندی کالا </th>
-                                <th>دسته بندی کالا</th>
-                                <th>کد واحد کالا </th>
-                                <th>عنوان واحد کالا</th>
+                                <th>شماره</th>
+                                <th>تاریخ</th>
+                                <th>طرف حساب</th>
+                                <th>قابل پرداحت</th>
+                                <th>شناسه</th>
+                                <th>کاربر ثبت کننده</th>
+                                <th>نهایی شده</th>
+                                <th>زمان نهایی شدن</th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="dataBody">
                         </tbody>
                     </table>
                 </div>
@@ -42,11 +46,25 @@
     <script>
         $(document).ready(function () {
             initDataTables();
+            $('#tblPreInvoice').on('click', 'a.remove', function (e) {
+                let Id = GetRowId($(this))
+                AlertConfirm("هشدار", "آیا از حذف این مورد مطمئن هستید؟!", function () {
+                    GetFromServer('@Url.Page("PreInvoice", "Delete")', { id: Id }, function (result) {
+                        if (result.isSuccess) {
+                            ToastMessageSuccess(result.message);
+                            ReloadDataTable("#tblPreInvoice");
+                            initDataTables();
+                        } else {
+                            ToastMessageError(result.message);
+                        }
+                    })
+                }, null)
+            })
         })
         function initDataTables() {
-            GetFromServer('@Url.Page("Product", "List")', {}, function (result) {
-                DataTableDestroy("#tblProduct");
-                $("#tblProduct").DataTable({
+            GetFromServer('@Url.Page("PreInvoice", "List")', {}, function (result) {
+                DataTableDestroy("#tblPreInvoice");
+                $("#tblPreInvoice").DataTable({
                     data: result,
                     language: {
                         url: "/lib/datatables/Persian.json"
@@ -56,8 +74,16 @@
                     order: [[0, "desc"]],
                     columns: [
                         {
-                            data: "code",
-                            width: "20%",
+                            sortable: true,
+                            data: "preInvoiceNo",
+                            width: "10%",
+                            render: function (data, type, row, meta) {
+                                return "<p class='ltr text-left'>" + data + "</p>";
+                            }
+                        },
+                        {
+                            sortable: true,
+                            data: "preInvoiceDate",
                             render: function (data, type, row, meta) {
                                 return "<p class='ltr text-left'>" + data + "</p>";
                             }
@@ -65,53 +91,53 @@
                         {
                             sortable: true,
                             data: "title",
-                            width: "30%",
-
                             render: function (data, type, row, meta) {
                                 return SubString(data, 0, 80);
                             }
                         },
                         {
                             sortable: true,
-                            data: "productGroupCode",
-                            width: "20%",
-
+                            data: "totalNetPrice",
                             render: function (data, type, row, meta) {
                                 return "<p class='ltr text-left'>" + data + "</p>";
                             }
                         },
                         {
                             sortable: true,
-                            data: "productGroupTitle",
-                            width: "30%",
-
+                            data: "reference",
                             render: function (data, type, row, meta) {
                                 return SubString(data, 0, 80);
                             }
                         },
                         {
                             sortable: true,
-                            data: "unitCode",
-                            width: "20%",
-
+                            data: "userTitle",
+                            render: function (data, type, row, meta) {
+                                return SubString(data, 0, 80);
+                            }
+                        },
+                        {
+                            sortable: true,
+                            data: "regist",
+                            render: function (data, type, row, meta) {
+                                if (data) {
+                                    return "<span class='ltr text-left'><i class='fa fa-check'></i></span>";
+                                } else {
+                                    return "";
+                                }
+                            }
+                        },
+                        {
+                            sortable: true,
+                            data: "registDateTime",
                             render: function (data, type, row, meta) {
                                 return "<p class='ltr text-left'>" + data + "</p>";
-                            }
-                        },
-                        {
-                            sortable: true,
-                            data: "unitTitle",
-                            width: "20%",
-
-                            render: function (data, type, row, meta) {
-                                return SubString(data, 0, 80);
                             }
                         },
                         {
                             sortable: false,
                             data: "id",
                             width: "15%",
-
                             render: function (data, type, row, meta) {
                                 var html = '';
                                 html += '<a data="' + data + '" class=" btn btn-sm btn-clean btn-icon cursor-pointer edit" title="ویرایش"><i class="la la-edit"></i></a>';
@@ -124,8 +150,6 @@
                 });
 
             }, true)
-
         }
     </script>
-
 }

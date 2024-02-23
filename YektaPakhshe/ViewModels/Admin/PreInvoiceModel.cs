@@ -26,9 +26,10 @@ namespace ViewModels.Admin
         public bool Revoked { get; set; }
         public string RevokedDateTime { get; set; }
         public bool Regist { get; set; }
-        public bool RegistDateTime { get; set; }
+        public string RegistDateTime { get; set; }
         public string TotalNetPrice { get; set; }
         public string TaxPrice { get; set; }
         public string UserId { get; set; }
+        public string UserTitle { get; set; }
     }
 }

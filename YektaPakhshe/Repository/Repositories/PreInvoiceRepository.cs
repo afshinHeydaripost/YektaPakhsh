@@ -55,13 +55,13 @@ namespace Repository.Repositories
                 PreInvoiceDate = DateTools.ToPersianDate(x.PreInvoiceDate),
                 Reference = x.Reference,
                 DiscountPrice = x.strDiscountPrice,
-                Code = x.Person.Code,
-                TaxPrice = x.strTaxPrice,
-                DiscountRate = x.DiscountRate,
                 Id = x.Id,
-                Revoked = x.Revoked,
-                Title = x.Person.Title,
+
+                Title = x.Person.Title + "_" + x.Person.Code,
+                Regist = x.Regist,
+                RegistDateTime = (x.Regist) ? DateTools.ToPersianDate(x.RegistDateTime) : "",
                 TotalNetPrice = x.strTotalNetPrice,
+                UserTitle = x.User.FirstName + " " + x.User.LastName
             }).ToListAsync();
         }
 
@@ -73,6 +73,15 @@ namespace Repository.Repositories
             if (await _Context.PreInvoices.AnyAsync())
                 no = await _Context.PreInvoices.MaxAsync(x => x.PreInvoiceNo);
             return (no + 1).ToString().PadLeft(10, '0');
+        }
+
+        public async Task<PreInvoice> GetPreInvoiceById(int id, string userId)
+        {
+            var query = _Context.PreInvoices.Where(x => x.Id == id).AsQueryable();
+            var UserIsAdmin = await _userRepository.UserIsAdmin(userId);
+            if (!UserIsAdmin.isSuccess)
+                query = query.Where(x => x.UserId == userId).AsQueryable();
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

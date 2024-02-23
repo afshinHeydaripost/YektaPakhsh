@@ -91,6 +91,7 @@ namespace Site
 			services.AddScoped<IProductRepository, ProductRepository>();
 			services.AddScoped<IProductGroupRepository, ProductGroupRepository>();
 			services.AddScoped<IPersonRepository, PersonRepository>();
+			services.AddScoped<IPreInvoiceRepository, PreInvoiceRepository>();
 		}
 	}
 }

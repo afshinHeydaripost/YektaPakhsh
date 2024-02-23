@@ -9,6 +9,10 @@ function GetRowId(obj, attr = "data") {
     var id = obj.attr(attr);
     return id;
 }
+function ReloadDataTable(obj, data = "#dataBody") {
+    DataTableDestroy(obj);
+    $(data).html("");
+}
 function HidModal(model) {
     $(model).modal('hide');
 }
