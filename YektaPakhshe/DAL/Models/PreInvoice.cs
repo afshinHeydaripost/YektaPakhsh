@@ -7,7 +7,8 @@ namespace DAL.Models;
 public partial class PreInvoice : BaseEntity
 {
 
-    public string PreInvoiceNo { get; set; }
+    public int PreInvoiceNo { get; set; }
+    public string strPreInvoiceNo { get; set; }
 
     public DateTime PreInvoiceDate { get; set; }
 
@@ -15,14 +16,21 @@ public partial class PreInvoice : BaseEntity
 
     public decimal? DiscountRate { get; set; }
     public decimal? DiscountPrice { get; set; }
+    public string strDiscountPrice { get; set; }
 
     public string Reference { get; set; }
 
     public bool Revoked { get; set; }
 
+    public DateTime? RevokedDateTime { get; set; }
+    public bool Regist { get; set; }
+    public DateTime? RegistDateTime { get; set; }
     public decimal? Price { get; set; }
+    public string strPrice { get; set; }
     public decimal? TaxPrice { get; set; }
+    public string strTaxPrice { get; set; }
     public decimal? TotalNetPrice { get; set; }
+    public string strTotalNetPrice { get; set; }
     public string UserId { get; set; }
 
     public DateTime CreateDateTime { get; set; }

@@ -9,16 +9,18 @@ public partial class PreInvoiceFolder : BaseEntity
     public int PreInvoiceId { get; set; }
 
     public int ProductId { get; set; }
+    public string ProductTitle { get; set; }
 
     public decimal Quantity { get; set; }
 
     public decimal UnitPrice { get; set; }
+    public string strUnitPrice { get; set; }
 
-    public decimal TotalPrice { get; set; }
-
-    public decimal TaxPrice { get; set; }
+    public decimal? TaxPrice { get; set; }
+    public string strTaxPrice { get; set; }
 
     public decimal TotalNetPrice { get; set; }
+    public string strTotalNetPrice { get; set; }
 
     public string Reference { get; set; }
 

@@ -301,10 +301,16 @@ public partial class YektaPakhshContext : DbContext
         });
         modelBuilder.Entity<PreInvoice>(entity =>
         {
-            entity.ToTable("preInvoice");
+            entity.ToTable("PreInvoice");
 
             entity.Property(e => e.CreateDateTime).HasColumnType("datetime");
+            entity.Property(e => e.strPreInvoiceNo).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(3000);
+            entity.Property(e => e.strPreInvoiceNo).HasMaxLength(20);
+            entity.Property(e => e.strDiscountPrice).HasMaxLength(50);
+            entity.Property(e => e.strPrice).HasMaxLength(50);
+            entity.Property(e => e.strTaxPrice).HasMaxLength(50);
+            entity.Property(e => e.strTotalNetPrice).HasMaxLength(50);
             entity.Property(e => e.DiscountRate).HasColumnType("decimal(7, 2)");
             entity.Property(e => e.DiscountPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.Price).HasColumnType("decimal(38, 2)").IsRequired();
@@ -312,11 +318,16 @@ public partial class YektaPakhshContext : DbContext
             entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)").IsRequired();
             entity.Property(e => e.PreInvoiceDate)
                 .HasColumnType("date")
-                .HasColumnName("preInvoiceDate");
-            entity.Property(e => e.PreInvoiceNo)
-                .IsRequired()
-                .HasMaxLength(10)
-                .HasColumnName("preInvoiceNo");
+                .HasColumnName("PreInvoiceDate");
+            entity.Property(e => e.RegistDateTime)
+                .HasColumnType("date")
+                .HasColumnName("RegistDateTime");
+            
+            entity.Property(e => e.RevokedDateTime)
+                .HasColumnType("date")
+                .HasColumnName("RevokedDateTime");
+
+            entity.Property(e => e.PreInvoiceNo).IsRequired();
             entity.Property(e => e.Reference).HasMaxLength(50);
             entity.Property(e => e.UpdateDateTime).HasColumnType("datetime");
             entity.Property(e => e.UserId)
@@ -338,7 +349,7 @@ public partial class YektaPakhshContext : DbContext
 
         modelBuilder.Entity<PreInvoiceAddress>(entity =>
         {
-            entity.ToTable("preInvoiceAddress");
+            entity.ToTable("PreInvoiceAddress");
 
             entity.Property(e => e.PersonAddress).HasMaxLength(1000);
             entity.Property(e => e.PersonMobileNumber).HasMaxLength(200);
@@ -353,17 +364,24 @@ public partial class YektaPakhshContext : DbContext
                 .HasForeignKey(d => d.PreInvoiceId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_preInvoiceAddress_preInvoice");
+            entity.HasOne(d => d.PersonAddresses).WithMany(p => p.PreInvoiceAddresses)
+                .HasForeignKey(d => d.PersonAddressId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PreInvoiceAddress_PersonAddress");
         });
 
         modelBuilder.Entity<PreInvoiceFolder>(entity =>
         {
-            entity.ToTable("preInvoiceFolder");
+            entity.ToTable("PreInvoiceFolder");
             entity.Property(e => e.PreInvoiceId).HasColumnName("preInvoiceId");
             entity.Property(e => e.Quantity).HasColumnType("decimal(38, 3)");
             entity.Property(e => e.Reference).HasMaxLength(150);
+            entity.Property(e => e.ProductTitle).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.strUnitPrice).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.strTaxPrice).HasMaxLength(50);
+            entity.Property(e => e.strTotalNetPrice).HasMaxLength(50).IsRequired();
             entity.Property(e => e.TaxPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.TotalNetPrice).HasColumnType("decimal(38, 2)");
-            entity.Property(e => e.TotalPrice).HasColumnType("decimal(38, 2)");
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(38, 2)");
 
             entity.HasOne(d => d.PreInvoice).WithMany(p => p.PreInvoiceFolders)

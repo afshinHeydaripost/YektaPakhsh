@@ -25,4 +25,6 @@ public partial class PersonAddress : BaseEntity
     public DateTime? UpdateDateTime { get; set; }
     public virtual Person Person { get; set; }
     public virtual AspNetUser User { get; set; }
+    public virtual ICollection<PreInvoiceAddress> PreInvoiceAddresses { get; set; } = new List<PreInvoiceAddress>();
+
 }

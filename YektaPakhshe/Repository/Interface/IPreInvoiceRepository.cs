@@ -14,6 +14,7 @@ namespace Repository.Interface
     public interface IPreInvoiceRepository : IGeneralRepository<PreInvoice>
     {
         Task<List<PreInvoiceViewModel>> GetList(string userId, string text = "");
-        Task<string> GetMaxNo(string userId);
+        Task<string> GetMaxNo();
+        Task<GeneralResponse> GetCheckNo(string no, int? id);
     }
 }

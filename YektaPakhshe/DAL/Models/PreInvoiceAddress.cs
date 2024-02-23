@@ -7,6 +7,8 @@ namespace DAL.Models;
 public partial class PreInvoiceAddress : BaseEntity
 {
     public int PreInvoiceId { get; set; }
+    public int PersonAddressId { get; set; }
+
 
     public string PersonReceiverTitle { get; set; }
 
@@ -21,4 +23,5 @@ public partial class PreInvoiceAddress : BaseEntity
     public string PersonPostCode { get; set; }
 
     public virtual PreInvoice PreInvoice { get; set; }
+    public virtual PersonAddress PersonAddresses { get; set; }
 }
