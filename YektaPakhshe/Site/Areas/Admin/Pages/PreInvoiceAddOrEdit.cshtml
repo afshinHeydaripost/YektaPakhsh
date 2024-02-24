@@ -1,0 +1,94 @@
+﻿@page "{id?}"
+@model Site.Areas.Admin.Pages.PreInvoiceAddOrEditModel
+@{
+
+}
+
+
+<!--begin::Row-->
+<div class="row">
+    <div class="col-12">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">افزودن پیش فاکتور</h3>
+                </div>
+                <div class="card-toolbar">
+                    <partial name="_btn" model='"btnEditPerson"' />
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <form class="form" id="frmPreInvoice" method="post">
+                        <input asp-for="preInvoice.Id" type="hidden" />
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-2 col-lg-2 col-form-label text-alert">شماره پیش فاکتور</label>
+                                    <div class="col-lg-8 col-xl-5">
+                                        <input type="text" asp-for="preInvoice.PreInvoiceNo" readonly class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                    <div class="col-lg-2 col-xl-2">
+                                        <button type="button" onclick="GetMaxNo()" class="btn btn-sm btn-success font-weight-bold">
+                                            <i class="fa fa-redo-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">تاریخ پیش فاکتور</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input type="text" asp-for="preInvoice.PreInvoiceDate" class="form-control JustDigit form-control-lg form-control-solid" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-alert">طرف حساب</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <select asp-for="preInvoice.PersonId" class="form-control">
+                                            @foreach (var item in Model.Persons)
+                                            {
+                                                <option value="@item.Id">@item.Title</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Row-->
+@section Script {
+    <link href="~/lib/persian-datepicker/css/persian-datepicker.css" rel="stylesheet" />
+    <script src="~/lib/persian-datepicker/js/persian-date.js"></script>
+    <script src="~/lib/persian-datepicker/js/persian-datepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            ToPersianDatepicker('#preInvoice_PreInvoiceDate', 'YYYY/MM/DD');
+            ToSelect2("#preInvoice_PersonId")
+        })
+        function GetMaxNo() {
+            GetFromServer('@Url.Page("PreInvoiceAddOrEdit", "MaxNo")', {}, function (result) {
+                $("#preInvoice_PreInvoiceNo").val(result).trigger("change")
+            })
+        }
+    </script>
+}

@@ -59,7 +59,14 @@
                         }
                     })
                 }, null)
+            });
+            $('#btnAdd').click(function () {
+                ChangeUrl("/Admin/PreInvoiceAddOrEdit");
             })
+            $('#tblPreInvoice').on('click', 'a.edit', function (e) {
+                let Id = GetRowId($(this))
+                ChangeUrl("/Admin/PreInvoiceAddOrEdit/" + Id);
+            });
         })
         function initDataTables() {
             GetFromServer('@Url.Page("PreInvoice", "List")', {}, function (result) {
